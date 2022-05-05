@@ -1,6 +1,7 @@
 const { merge } = require("webpack-merge");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
 const commonConfig = require("./webpack.common");
+const ModuleFederationPlugin = require("webpack/lib/container/ModuleFederationPlugin");
 
 const devConfig = {
   mode: "development",
@@ -10,6 +11,12 @@ const devConfig = {
   },
   devtool: "eval-cheap-module-source-map",
   plugins: [
+    new ModuleFederationPlugin({
+      name: "container",
+      remotes: {
+        marketing: "marketing@http://localhost:8081/remoteEntry.js",
+      },
+    }),
     new HtmlWebpackPlugin({
       template: "./public/index.html",
     }),
