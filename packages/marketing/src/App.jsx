@@ -1,4 +1,8 @@
-import { BrowserRouter, Route, Routes } from "react-router-dom";
+import {
+  Route,
+  Routes,
+  unstable_HistoryRouter as HistoryRouter,
+} from "react-router-dom";
 import { createGenerateClassName, StylesProvider } from "@material-ui/core";
 
 import Landing from "./components/Landing";
@@ -9,11 +13,11 @@ const generateClassName = createGenerateClassName({
   productionPrefix: "ma",
 });
 
-export default () => {
+export default ({ history }) => {
   return (
     <div>
       <StylesProvider generateClassName={generateClassName}>
-        <BrowserRouter>
+        <HistoryRouter history={history}>
           <Routes>
             <Route path="/">
               <Route index element={<Landing />} />
@@ -27,7 +31,7 @@ export default () => {
               />
             </Route>
           </Routes>
-        </BrowserRouter>
+        </HistoryRouter>
       </StylesProvider>
     </div>
   );

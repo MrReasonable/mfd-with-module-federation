@@ -1,22 +1,25 @@
 import MarketingApp from "./components/MarketingApp";
 import Header from "./components/Header";
-import { BrowserRouter } from "react-router-dom";
+import { unstable_HistoryRouter as HistoryRouter } from "react-router-dom";
 import { createGenerateClassName, StylesProvider } from "@material-ui/core";
+import { createBrowserHistory } from "history";
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "co",
 });
 
+const history = createBrowserHistory();
+
 export default () => {
   return (
-    <BrowserRouter>
+    <HistoryRouter history={history}>
       <StylesProvider generateClassName={generateClassName}>
         <div>
           <Header />
           <hr />
-          <MarketingApp />
+          <MarketingApp history={history} />
         </div>
       </StylesProvider>
-    </BrowserRouter>
+    </HistoryRouter>
   );
 };
