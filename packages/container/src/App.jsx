@@ -1,5 +1,3 @@
-import MarketingApp from "./components/MarketingApp";
-import AuthApp from "./components/AuthApp";
 import Header from "./components/Header";
 import {
   Route,
@@ -8,7 +6,11 @@ import {
 } from "react-router-dom";
 import { createGenerateClassName, StylesProvider } from "@material-ui/core";
 import { createBrowserHistory } from "history";
-import React from "react";
+import { lazy, Suspense } from "react";
+import Progress from "./components/Progress";
+
+const MarketingLazy = lazy(() => import("./components/MarketingApp"));
+const AuthLazy = lazy(() => import("./components/AuthApp"));
 
 const generateClassName = createGenerateClassName({
   productionPrefix: "co",
@@ -23,26 +25,15 @@ export default () => {
         <div>
           <Header />
           <hr />
-          <Routes>
-            <Route path="/auth">
-              <Route
-                path="*"
-                element={
-                  <React.Suspense fallback={<>...</>}>
-                    <AuthApp history={history} />
-                  </React.Suspense>
-                }
+          <Suspense fallback={<Progress />}>
+            <Routes>
+              <Route path="/auth">
+                <Route path="*" element={<AuthLazy history={history} />} />
+              </Route>
+              <Route path="/*" element={<MarketingLazy history={history} />} />}
               />
-            </Route>
-            <Route
-              path="*"
-              element={
-                <React.Suspense fallback={<>...</>}>
-                  <MarketingApp history={history} />} />
-                </React.Suspense>
-              }
-            />
-          </Routes>
+            </Routes>
+          </Suspense>
         </div>
       </StylesProvider>
     </HistoryRouter>
