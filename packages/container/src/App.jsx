@@ -24,7 +24,10 @@ export default () => {
     <HistoryRouter history={history}>
       <StylesProvider generateClassName={generateClassName}>
         <div>
-          <Header isSignedIn={isSignedIn} />
+          <Header
+            onSignOut={() => setIsSignedIn(false)}
+            isSignedIn={isSignedIn}
+          />
           <hr />
           <Suspense fallback={<Progress />}>
             <Routes>
