@@ -19,17 +19,16 @@ export default ({ history }) => {
       <StylesProvider generateClassName={generateClassName}>
         <HistoryRouter history={history}>
           <Routes>
-            <Route path="/">
-              <Route index element={<Landing />} />
-              <Route
-                path="pricing"
-                element={
-                  <React.Suspense fallback={<>...</>}>
-                    <Pricing />
-                  </React.Suspense>
-                }
-              />
-            </Route>
+            <Route index path="/" element={<Landing />} />
+            <Route
+              path="/pricing"
+              element={
+                <React.Suspense fallback={<>...</>}>
+                  <Pricing />
+                </React.Suspense>
+              }
+            />
+            <Route path="/*" element={<></>} />
           </Routes>
         </HistoryRouter>
       </StylesProvider>

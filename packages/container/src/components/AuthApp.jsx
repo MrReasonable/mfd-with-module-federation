@@ -1,9 +1,8 @@
-import { mount } from "marketing/MarketingApp";
+import { mount } from "auth/AuthApp";
 import { useEffect, useRef } from "react";
 
 export default ({ history }) => {
   const ref = useRef(null);
-
   useEffect(() => {
     const { onParentNavigate } = mount(ref.current, {
       initialPath: history.location.pathname,

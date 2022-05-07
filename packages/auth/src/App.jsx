@@ -23,6 +23,7 @@ export default ({ history }) => {
               <Route path="signin" element={<SignIn />} />
               <Route path="signup" element={<SignUp />} />
             </Route>
+            <Route path="/*" element={<></>} />
           </Routes>
         </HistoryRouter>
       </StylesProvider>
