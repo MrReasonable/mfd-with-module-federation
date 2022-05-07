@@ -2,7 +2,7 @@ import { createRoot } from "react-dom/client";
 import { createBrowserHistory, createMemoryHistory } from "history";
 import App from "./App";
 
-const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
+const mount = (el, { onNavigate, defaultHistory, initialPath, onSignIn }) => {
   const history =
     defaultHistory ||
     createMemoryHistory({
@@ -12,7 +12,7 @@ const mount = (el, { onNavigate, defaultHistory, initialPath }) => {
     history.listen(onNavigate);
   }
   const root = createRoot(el);
-  root.render(<App history={history} />);
+  root.render(<App onSignIn={onSignIn} history={history} />);
 
   return {
     onParentNavigate({ location: { pathname: nextPathname } }) {

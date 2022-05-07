@@ -13,15 +13,15 @@ const generateClassName = createGenerateClassName({
   productionPrefix: "au",
 });
 
-export default ({ history }) => {
+export default ({ history, onSignIn }) => {
   return (
     <div>
       <StylesProvider generateClassName={generateClassName}>
         <HistoryRouter history={history}>
           <Routes>
             <Route path="/auth">
-              <Route path="signin" element={<SignIn />} />
-              <Route path="signup" element={<SignUp />} />
+              <Route path="signin" element={<SignIn onSignIn={onSignIn} />} />
+              <Route path="signup" element={<SignUp onSignIn={onSignIn} />} />
             </Route>
             <Route path="/*" element={<></>} />
           </Routes>

@@ -12,6 +12,9 @@ export default ({ history }) => {
           history.push(nextPathName);
         }
       },
+      onSignIn: () => {
+        console.log("User signed in");
+      },
     });
     return history.listen(onParentNavigate);
   }, []);
