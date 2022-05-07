@@ -6,7 +6,7 @@ import {
 } from "react-router-dom";
 import { createGenerateClassName, StylesProvider } from "@material-ui/core";
 import { createBrowserHistory } from "history";
-import { lazy, Suspense } from "react";
+import { lazy, Suspense, useState } from "react";
 import Progress from "./components/Progress";
 
 const MarketingLazy = lazy(() => import("./components/MarketingApp"));
@@ -19,16 +19,28 @@ const generateClassName = createGenerateClassName({
 const history = createBrowserHistory();
 
 export default () => {
+  const [isSignedIn, setIsSignedIn] = useState(false);
   return (
     <HistoryRouter history={history}>
       <StylesProvider generateClassName={generateClassName}>
         <div>
-          <Header />
+          <Header isSignedIn={isSignedIn} />
           <hr />
           <Suspense fallback={<Progress />}>
             <Routes>
               <Route path="/auth">
-                <Route path="*" element={<AuthLazy history={history} />} />
+                <Route
+                  path="*"
+                  element={
+                    <AuthLazy
+                      history={history}
+                      onSignIn={() => {
+                        console.log("Signed in.");
+                        setIsSignedIn(true);
+                      }}
+                    />
+                  }
+                />
               </Route>
               <Route path="/*" element={<MarketingLazy history={history} />} />}
               />

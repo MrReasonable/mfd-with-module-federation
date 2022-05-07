@@ -1,7 +1,7 @@
 import { mount } from "auth/AuthApp";
 import { useEffect, useRef } from "react";
 
-export default ({ history }) => {
+export default ({ history, onSignIn }) => {
   const ref = useRef(null);
   useEffect(() => {
     const { onParentNavigate } = mount(ref.current, {
@@ -12,9 +12,7 @@ export default ({ history }) => {
           history.push(nextPathName);
         }
       },
-      onSignIn: () => {
-        console.log("User signed in");
-      },
+      onSignIn,
     });
     return history.listen(onParentNavigate);
   }, []);
