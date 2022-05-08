@@ -1,12 +1,13 @@
 import Header from "./components/Header";
 import {
+  Navigate,
   Route,
   Routes,
   unstable_HistoryRouter as HistoryRouter,
 } from "react-router-dom";
 import { createGenerateClassName, StylesProvider } from "@material-ui/core";
 import { createBrowserHistory } from "history";
-import { lazy, Suspense, useState } from "react";
+import { lazy, Suspense, useEffect, useState } from "react";
 import Progress from "./components/Progress";
 
 const MarketingLazy = lazy(() => import("./components/MarketingApp"));
@@ -21,6 +22,12 @@ const history = createBrowserHistory();
 
 export default () => {
   const [isSignedIn, setIsSignedIn] = useState(false);
+  useEffect(() => {
+    if (isSignedIn) {
+      history.push("/dashboard");
+    }
+  }, [isSignedIn]);
+
   return (
     <HistoryRouter history={history}>
       <StylesProvider generateClassName={generateClassName}>
@@ -39,14 +46,22 @@ export default () => {
                     <AuthLazy
                       history={history}
                       onSignIn={() => {
-                        console.log("Signed in.");
                         setIsSignedIn(true);
                       }}
                     />
                   }
                 />
               </Route>
-              <Route path="/dashboard" index element={<DashboardLazy />} />
+              <Route
+                path="/dashboard"
+                index
+                element={
+                  <>
+                    {!isSignedIn && <Navigate to="/" replace={true} />}
+                    {isSignedIn && <DashboardLazy />}
+                  </>
+                }
+              />
               <Route path="/*" element={<MarketingLazy history={history} />} />}
             </Routes>
           </Suspense>
